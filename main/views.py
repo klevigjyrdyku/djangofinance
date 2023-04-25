@@ -1,28 +1,16 @@
-from django.shortcuts import render
-from main.forms import NewUserForm
-from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from .forms import NewUserForm
 
-
-
-# Create your views here.
-def is_admin(user):
-    return user.is_authenticated and user.is_superuser
-
-@user_passes_test(is_admin)
-def register_request(request):
-    if request.method == "POST":
+def register(request):
+    if request.method == 'POST':
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            # Create a FirstTable object for the new user
-            first_table = FirstTable.objects.create(user=user)
-            login(request, user)
-            messages.success(request, "Registration successful.")
-            return redirect("main:profile")
-        else:
-            messages.error(request, "Unsuccessful registration. Invalid information.")
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Your account has been created! You are now able to log in')
+            return redirect('login')
     else:
         form = NewUserForm()
-    return render(request=request, template_name="main/register.html", context={"register_form": form })
+    return render(request, 'users/register.html', {'form': form})

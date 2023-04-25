@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'djangofinance.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'finance',
+        'NAME': 'financa',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
@@ -130,3 +130,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+AUTH_USER_MODEL = 'main.CustomUser'

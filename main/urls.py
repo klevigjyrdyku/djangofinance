@@ -1,9 +1,12 @@
-from django.urls import path
-from main import views
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
 
-app_name = "main"
+app_name = 'finance'
 
 urlpatterns = [
-    path("register/", views.register_request, name="register"),
+    path('register/', views.register, name='register'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-]
+
